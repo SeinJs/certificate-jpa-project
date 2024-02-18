@@ -1,0 +1,25 @@
+PUT http://localhost:8081/residents/8
+Content-Type: application/json
+
+{
+  "name": "Chongus",
+  "residentRegistrationNumber": "410609-******",
+  "genderCode": "여"
+}
+###
+POST http://localhost:8081/residents
+Content-Type: application/json
+
+{
+  "residentSerialNumber": 10,
+  "name": "hapiCat",
+  "residentRegistrationNumber": "120718-******",
+  "genderCode": "남",
+  "birthDate": "1999-03-15 13:00:00",
+  "birthPlaceCode": "병원",
+  "registrationBaseAddress": "부산 동래구"
+}
+
+###
+GET http://localhost:8081/
+###

@@ -1,27 +1,42 @@
 package com.nhnacademy.jpa.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
-@NoArgsConstructor
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "family_relationship")
 public class FamilyRelationship {
-    @Id
-    @Column(name = "family_resident_serial_number")
-    private Integer familyResidentSerialNumber;
-
-    @Column(name = "base_resident_serial_number")
-    private Integer baseResidentSerialNumber;
+    @EmbeddedId
+    private Pk pk;
 
     @Column(name = "family_relationship_code")
     private String familyRelationshipCode;
+
+    //foreign keys
+    @MapsId("baseResidentSerialNumber")
+    @ManyToOne
+    @JoinColumn(name = "base_resident_serial_number")
+    private Resident baseResident;
+
+    public FamilyRelationship(Pk pk, String familyRelationshipCode) {
+        this.pk = pk;
+        this.familyRelationshipCode = familyRelationshipCode;
+    }
+
+    @Embeddable
+    @EqualsAndHashCode
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Pk implements Serializable{
+        @Column(name = "base_resident_serial_number")
+        private Integer baseResidentSerialNumber;
+
+        @Column(name = "family_resident_serial_number")
+        private Integer familyResidentSerialNumber;
+    }
 }

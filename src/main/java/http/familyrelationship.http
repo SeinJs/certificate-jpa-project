@@ -1,0 +1,18 @@
+POST http://localhost:8081/residents/8/relationship
+Content-Type: application/json
+
+{
+  "familyResidentSerialNumber": 9,
+  "familyRelationshipCode": "모"
+}
+
+###
+PUT http://localhost:8081/residents/8/relationship/9
+Content-Type: application/json
+
+{
+  "familyRelationshipCode": "자녀"
+}
+###
+DELETE http://localhost:8081/residents/8/relationship/9
+###

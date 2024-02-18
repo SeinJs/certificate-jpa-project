@@ -18,9 +18,8 @@ import java.util.Properties;
 @Configuration
 @EnableJpaRepositories(basePackageClasses = BaseRepository.class)
 public class JpaConfig {
-
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource){
         LocalContainerEntityManagerFactoryBean enf = new LocalContainerEntityManagerFactoryBean();
         enf.setDataSource(dataSource);
         enf.setPackagesToScan("com.nhnacademy.jpa.entity");
@@ -32,7 +31,7 @@ public class JpaConfig {
 
     private JpaVendorAdapter jpaVendorAdapter(){
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setDatabase(Database.H2);
+        jpaVendorAdapter.setDatabase(Database.MYSQL);
         return jpaVendorAdapter;
     }
 
@@ -48,7 +47,7 @@ public class JpaConfig {
     }
 
     @Bean
-    public PlatformTransactionManager platformTransactionManager(EntityManagerFactory emf){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
 

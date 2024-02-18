@@ -1,0 +1,15 @@
+POST http://localhost:8081/household
+Content-Type: application/json
+
+{
+  "residentSerialNumber": 8,
+  "householdCompositionDate": "2012-12-12",
+  "householdCompositionReasonCode": "전입",
+  "currentHouseMovementAddress": "부산 수영구"
+}
+
+###
+PUT http://localhost:8081/household/2
+
+###
+DELETE http://localhost:8081/household/2

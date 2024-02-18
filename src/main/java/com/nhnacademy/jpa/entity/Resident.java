@@ -1,18 +1,16 @@
 package com.nhnacademy.jpa.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
-@NoArgsConstructor
 @Entity
 @Table(name = "resident")
 public class Resident {
@@ -29,7 +27,7 @@ public class Resident {
     private String genderCode;
 
     @Column(name = "birth_date")
-    private LocalDateTime birthDate;
+    private Date birthDate;
 
     @Column(name = "birth_place_code")
     private String birthPlaceCode;
@@ -38,11 +36,21 @@ public class Resident {
     private String registrationBaseAddress;
 
     @Column(name = "death_date")
-    private LocalDateTime deathDate;
+    private Date deathDate;
 
     @Column(name = "death_place_code")
     private String deathPlaceCode;
 
     @Column(name = "death_place_address")
     private String deathPlaceAddress;
+
+    // Relationships
+    @OneToMany(mappedBy = "baseResident")
+    private List<FamilyRelationship> baseRelationshipList;
+
+    @OneToMany(mappedBy = "resident")
+    private List<BirthDeathReportResident> reportResidentList;
+
+    @OneToMany(mappedBy = "resident")
+    private List<HouseholdCompositionResident> compositionResidentList;
 }

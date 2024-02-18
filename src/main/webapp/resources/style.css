@@ -1,0 +1,14 @@
+table {
+    border-collapse: collapse;
+    border:1px #ccc solid;
+}
+table tr>td,th{
+    padding:5px;
+    border:1px #ccc solid;
+}
+div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #73AD21;
+}

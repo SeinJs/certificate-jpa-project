@@ -1,0 +1,35 @@
+POST http://localhost:8081/residents
+Content-Type: application/json
+
+{
+  "residentSerialNumber": 10,
+  "name": "hapiCat",
+  "residentRegistrationNumber": "120718-******",
+  "genderCode": "남",
+  "birthDate": "1999-03-15 13:00:00",
+  "birthPlaceCode": "병원",
+  "registrationBaseAddress": "부산 동래구"
+}
+
+###
+POST http://localhost:8081/residents/8/birth
+Content-Type: application/json
+
+{
+  "birthDeathTypeCode": "출생",
+  "residentSerialNumber": 10,
+  "birthDeathReportDate": "1999-03-15 14:00:00",
+  "birthReportQualificationCode": "모",
+  "phoneNumber": "010-0000-0000"
+}
+
+###
+PUT http://localhost:8081/residents/8/birth/10
+Content-Type: application/json
+
+{
+  "phoneNumber": "010-XXXX-YYYY"
+}
+###
+DELETE http://localhost:8081/residents/8/birth/10
+###

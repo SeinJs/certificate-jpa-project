@@ -1,0 +1,39 @@
+POST http://localhost:8081/residents
+Content-Type: application/json
+
+{
+  "residentSerialNumber": 11,
+  "name": "trollface",
+  "residentRegistrationNumber": "210101-******",
+  "genderCode": "남",
+  "birthDate": "1999-03-15 13:00:00",
+  "birthPlaceCode": "병원",
+  "registrationBaseAddress": "부산 동래구",
+  "deathDate": "2024-01-01 10:00:00",
+  "deathPlaceCode": "병원",
+  "deathPlaceAddress": "부산 동래구"
+}
+
+###
+POST http://localhost:8081/residents/8/death
+Content-Type: application/json
+
+{
+  "birthDeathTypeCode": "사망",
+  "residentSerialNumber": 11,
+  "birthDeathReportDate": "1999-03-15 14:00:00",
+  "deathReportQualificationCode": "비동거친척",
+  "phoneNumber": "010-0000-0000"
+}
+
+###
+PUT http://localhost:8081/residents/8/death/10
+Content-Type: application/json
+
+{
+  "deathReportQualificationCode": "모",
+  "phoneNumber": "010-XXXX-YYYY"
+}
+###
+DELETE http://localhost:8081/residents/8/death/10
+###
