@@ -4,6 +4,7 @@ import com.nhnacademy.jpa.entity.HouseholdCompositionResident;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Data
 public class HouseholdRegisterRequest {
-    @NotEmpty
+    @NotNull
     private Integer residentSerialNumber;
     @NotEmpty
     private String householdCompositionDate;

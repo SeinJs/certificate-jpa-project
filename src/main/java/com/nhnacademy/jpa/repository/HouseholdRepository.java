@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface HouseholdRepository extends JpaRepository<Household, Integer>, HouseholdRepositoryCustom {
-    @Query(value = "select household_serial_number from household order by desc limit 1", nativeQuery = true)
+    @Query(value = "select household_serial_number from household order by household_serial_number desc limit 1\n", nativeQuery = true)
     Integer getLastSerialNumber();
     boolean existsByResident_ResidentSerialNumber(Integer serialNumber);
 }

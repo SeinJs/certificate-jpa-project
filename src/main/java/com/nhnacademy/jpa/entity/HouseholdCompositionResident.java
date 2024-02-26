@@ -1,8 +1,6 @@
 package com.nhnacademy.jpa.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +9,7 @@ import java.util.Date;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "household_composition_resident")
 public class HouseholdCompositionResident {
@@ -38,6 +37,8 @@ public class HouseholdCompositionResident {
 
     @Embeddable
     @EqualsAndHashCode
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Pk implements Serializable{
         @Column(name = "household_serial_number")
         private Integer householdSerialNumber;

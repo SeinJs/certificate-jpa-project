@@ -22,12 +22,12 @@ public class FamilyRelationshipRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> registerFamilyRelationship(@Valid @RequestBody FamilyRelationshipRequest registerRequest, @PathVariable("serialNumber") Integer serialNumber) {
+    public ResponseEntity<Void> registerFamilyRelationship(@Valid @RequestBody FamilyRelationshipRequest registerRequest, @PathVariable("serialNumber") String serialNumber) {
         FamilyRelationship familyRelationship = new FamilyRelationship();
-        FamilyRelationship.Pk pk = new FamilyRelationship.Pk(serialNumber, registerRequest.getFamilyResidentSerialNumber());
+        FamilyRelationship.Pk pk = new FamilyRelationship.Pk(Integer.valueOf(serialNumber), registerRequest.getFamilyResidentSerialNumber());
         familyRelationship.setPk(pk);
         familyRelationship.setFamilyRelationshipCode(registerRequest.getFamilyRelationshipCode());
-        familyRelationship.setBaseResident(residentRepository.findByResidentSerialNumber(serialNumber));
+        familyRelationship.setBaseResident(residentRepository.findByResidentSerialNumber(Integer.valueOf(serialNumber)));
 
         familyRelationshipRepository.save(familyRelationship);
         return ResponseEntity.status(HttpStatus.CREATED).build();

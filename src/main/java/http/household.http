@@ -1,3 +1,4 @@
+
 POST http://localhost:8081/household
 Content-Type: application/json
 
@@ -9,7 +10,40 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8081/residents
+Content-Type: application/json
+
+{
+  "residentSerialNumber": 12,
+  "name": "aha",
+  "residentRegistrationNumber": "8730123-******",
+  "genderCode": "남",
+  "birthDate": "1999-03-15 13:00:00",
+  "birthPlaceCode": "병원",
+  "registrationBaseAddress": "부산 동래구"
+}
+
+###
+POST http://localhost:8081/residents/8/relationship
+Content-Type: application/json
+
+{
+  "familyResidentSerialNumber": 12,
+  "familyRelationshipCode": "배우자"
+}
+
+###
+POST http://localhost:8081/residents/8/relationship
+Content-Type: application/json
+
+{
+  "familyResidentSerialNumber": 12,
+  "familyRelationshipCode": "배우자"
+}
+
+###
 PUT http://localhost:8081/household/2
 
 ###
 DELETE http://localhost:8081/household/2
+###
