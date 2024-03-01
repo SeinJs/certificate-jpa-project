@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!--로그인 되어 있을 때-->
+<div sec:authorize="isAuthenticated()">
+    <span sec:authentication="principal.username"></span>
+    <a href="">로그아웃</a>
+</div>
+
+<!--로그인 안 되어 있을 때-->
+<div sec:authorize="!isAuthenticated()">
+    <a href="">로그인</a>
+</div>
+<br>
+<a href="/">메인 페이지로 가기</a>
+<br>
+<br>
+<br>
+</html>

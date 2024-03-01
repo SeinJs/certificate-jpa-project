@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>목록</title>
+    <link rel="stylesheet" href="/templates/style.css">
+</head>
+<body>
+<h1>Welcome To Main Page!</h1>
+<th:block th:include="fragments/heading"/>
+<div sec:authorize="isAuthenticated()" class="resident_list">
+    <table title="목록">
+        <thead>
+        <tr>
+            <th>이름</th>
+            <th>주민등록등본</th>
+            <th>가족관계증명서</th>
+            <th>출생신고서</th>
+            <th>사망신고서</th>
+            <th>발급목록</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="resident: ${residentList}">
+            <td th:text="${resident.name}"></td>
+            <td>
+                <a th:href="@{'/report/resident' + ${resident.residentSerialNumber}}">주민등록등본</a>
+            </td>
+            <td>
+                <a th:href="@{'/report/family' + ${resident.residentSerialNumber}}">가족관계증명서</a>
+            </td>
+            <td>
+                <a th:href="@{'/report/birth' + ${resident.residentSerialNumber}}">출생신고서</a>
+            </td>
+            <td>
+                <a th:href="@{'/report/death' + ${resident.residentSerialNumber}}">사망신고서</a>
+            </td>
+            <td>
+                <a th:href="@{'/report/list' + ${resident.residentSerialNumber}}">발급목록</a>
+            </td>
+            <td>
+                <form action="">
+                    <input type="submit" value="삭제">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -7,8 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "household_composition_resident")
@@ -16,12 +15,15 @@ public class HouseholdCompositionResident {
     @EmbeddedId
     private Pk pk;
 
+    @NonNull
     @Column(name = "report_date")
     private Date reportDate;
 
+    @NonNull
     @Column(name = "household_relationship_code")
     private String householdRelationshipCode;
 
+    @NonNull
     @Column(name = "household_composition_change_reason_code")
     private String householdCompositionChangeReasonCode;
 

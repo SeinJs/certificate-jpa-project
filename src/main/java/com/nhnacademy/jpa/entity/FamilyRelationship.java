@@ -5,8 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "family_relationship")
@@ -14,6 +13,7 @@ public class FamilyRelationship {
     @EmbeddedId
     private Pk pk;
 
+    @NonNull
     @Column(name = "family_relationship_code")
     private String familyRelationshipCode;
 
@@ -22,11 +22,6 @@ public class FamilyRelationship {
     @ManyToOne
     @JoinColumn(name = "base_resident_serial_number")
     private Resident baseResident;
-
-    public FamilyRelationship(Pk pk, String familyRelationshipCode) {
-        this.pk = pk;
-        this.familyRelationshipCode = familyRelationshipCode;
-    }
 
     @Embeddable
     @EqualsAndHashCode

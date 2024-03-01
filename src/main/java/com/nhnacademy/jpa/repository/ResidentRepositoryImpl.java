@@ -15,6 +15,7 @@ public class ResidentRepositoryImpl extends QuerydslRepositorySupport implements
 
     @Override
     public List<FamilyRelationship> getResidentsRelationships(Integer serialNumber) {
+//        return null;
         QResident resident = QResident.resident;
         QFamilyRelationship familyRelationship = QFamilyRelationship.familyRelationship;
 

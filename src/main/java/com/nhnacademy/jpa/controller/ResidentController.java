@@ -29,6 +29,6 @@ public class ResidentController{
         List<Resident> residentList = residentRepository.findAll(pageable).getContent();
 
         model.addAttribute("residentList", residentList);
-        return "index";
+        return "home";
     }
 }

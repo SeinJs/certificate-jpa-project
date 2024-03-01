@@ -1,14 +1,13 @@
 package com.nhnacademy.jpa.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "certificate_issue")
 public class CertificateIssue {
@@ -20,9 +19,11 @@ public class CertificateIssue {
     @JoinColumn(name = "resident_serial_number")
     private Resident resident;
 
+    @NonNull
     @Column(name = "certificate_type_code")
     private String certificateTypeCode;
 
+    @NonNull
     @Column(name = "certificate_issue_date")
     private Date certificateIssueDate;
 }

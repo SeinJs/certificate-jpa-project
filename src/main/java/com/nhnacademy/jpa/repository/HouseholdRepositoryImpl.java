@@ -13,6 +13,7 @@ public class HouseholdRepositoryImpl extends QuerydslRepositorySupport implement
 
     @Override
     public List<HouseholdCompositionResident> getAllByHouseholdSerialNumber(Integer householdSerialNumber) {
+//        return null;
         QHousehold household = QHousehold.household;
         QHouseholdCompositionResident householdCompositionResident = QHouseholdCompositionResident.householdCompositionResident;
 

@@ -7,8 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "birth_death_report_resident")
@@ -16,6 +15,7 @@ public class BirthDeathReportResident {
     @EmbeddedId
     private Pk pk;
 
+    @NonNull
     @Column(name = "birth_death_report_date")
     private Date birthDeathReportDate;
 
@@ -28,6 +28,7 @@ public class BirthDeathReportResident {
     @Column(name = "email_address")
     private String emailAddress;
 
+    @NonNull
     @Column(name = "phone_number")
     private String phoneNumber;
 

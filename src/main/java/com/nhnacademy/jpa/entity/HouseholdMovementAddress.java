@@ -7,8 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "household_movement_address")
@@ -16,9 +15,11 @@ public class HouseholdMovementAddress {
     @EmbeddedId
     private Pk pk;
 
+    @NonNull
     @Column(name = "house_movement_address")
     private String houseMovementAddress;
 
+    @NonNull
     @Column(name = "last_address_yn")
     private String lastAddressYn;
 
