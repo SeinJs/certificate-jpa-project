@@ -27,6 +27,9 @@ public class ResidentRegisterRequest {
     private String deathDate;
     private String deathPlaceCode;
     private String deathPlaceAddress;
+    private String email;
+    private String id;
+    private String password;
 
     public Date getParsedBirthDate(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

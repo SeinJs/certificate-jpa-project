@@ -1,0 +1,22 @@
+POST http://localhost:8080/household/2/movement
+Content-Type: application/json
+
+{
+  "houseMovementAddress": "부산 수영구",
+  "houseMovementReportDate": "2009-09-11"
+}
+
+###
+PUT http://localhost:8080/household/2/movement/20090910
+Content-Type: application/json
+
+
+{
+  "houseMovementAddress": "부산 강서구",
+  "lastAddressYn": "N"
+}
+
+###
+DELETE http://localhost:8080/household/2/movement/20090909
+
+###

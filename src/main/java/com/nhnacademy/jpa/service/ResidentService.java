@@ -8,8 +8,6 @@ import com.nhnacademy.jpa.request.ResidentRegisterRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-
 @Service
 public class ResidentService {
     private final ResidentRepository residentRepository;
@@ -59,19 +57,33 @@ public class ResidentService {
             resident.setDeathPlaceAddress(residentRegisterRequest.getDeathPlaceAddress());
         }
 
+        if (residentRegisterRequest.getId() != null){
+            resident.setId(residentRegisterRequest.getId());
+            resident.setPassword(residentRegisterRequest.getPassword());
+            resident.setEmail(residentRegisterRequest.getEmail());
+        }
+
         return resident;
     }
 
     public Resident toResident(Integer serialNumber, ResidentModifyRequest residentModifyRequest){
         Resident resident = getResident(serialNumber);
-        resident.setName(residentModifyRequest.getName());
-        resident.setResidentRegistrationNumber(residentModifyRequest.getResidentRegistrationNumber());
-        resident.setGenderCode(residentModifyRequest.getGenderCode());
+        if (residentModifyRequest.getName() != null){
+            resident.setName(residentModifyRequest.getName());
+            resident.setResidentRegistrationNumber(residentModifyRequest.getResidentRegistrationNumber());
+            resident.setGenderCode(residentModifyRequest.getGenderCode());
+        }
 
         if (residentModifyRequest.getDeathDate() != null){
             resident.setDeathDate(residentModifyRequest.getDeathDate());
             resident.setDeathPlaceCode(residentModifyRequest.getDeathPlaceCode());
             resident.setDeathPlaceAddress(residentModifyRequest.getDeathPlaceAddress());
+        }
+
+        if (residentModifyRequest.getId() != null){
+            resident.setId(residentModifyRequest.getId());
+            resident.setPassword(residentModifyRequest.getPassword());
+            resident.setEmail(residentModifyRequest.getEmail());
         }
 
         return resident;

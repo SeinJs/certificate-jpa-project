@@ -20,6 +20,8 @@ public class BirthDeathReportRegisterRequest {
     @NotEmpty
     private Integer residentSerialNumber;
     @NotEmpty
+    private Integer reportResidentSerialNumber;
+    @NotEmpty
     private String birthDeathReportDate;
 
     private String birthReportQualificationCode;

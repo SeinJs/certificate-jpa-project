@@ -26,7 +26,7 @@ public class HouseholdMovementAddressRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> registerMovement(@PathVariable("householdSerialNumber") int householdSerialNumber, @RequestBody HouseholdMovementAddressRegisterRequest movementAddressRequest){
+    public ResponseEntity<Void> registerMovement(@PathVariable("householdSerialNumber") Integer householdSerialNumber, @RequestBody HouseholdMovementAddressRegisterRequest movementAddressRequest){
         Household household = householdRepository.findById(householdSerialNumber).get();
         HouseholdMovementAddress newAddressMovement = new HouseholdMovementAddress();
         HouseholdMovementAddress.Pk pk = new HouseholdMovementAddress.Pk(
@@ -36,19 +36,27 @@ public class HouseholdMovementAddressRestController {
         newAddressMovement.setPk(pk);
         newAddressMovement.setHouseMovementAddress(movementAddressRequest.getHouseMovementAddress());
         newAddressMovement.setLastAddressYn("Y");
+        household.setCurrentHouseMovementAddress(movementAddressRequest.getHouseMovementAddress());
         newAddressMovement.setHousehold(household);
-        movementAddressRepository.changeLatestToN();
+        movementAddressRepository.changeLatestToN(householdSerialNumber);
         movementAddressRepository.save(newAddressMovement);
+        householdRepository.save(household);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{reportDate}")
-    public ResponseEntity<Void> modifyMovement(@PathVariable("householdSerialNumber") int householdSerialNumber, @PathVariable("reportDate") String reportDate, @RequestBody HouseholdMovementAddressModifyRequest modifyRequest){
+    public ResponseEntity<Void> modifyMovement(@PathVariable("householdSerialNumber") Integer householdSerialNumber, @PathVariable("reportDate") String reportDate, @RequestBody HouseholdMovementAddressModifyRequest modifyRequest){
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
             Date parsedReportDate = dateFormat.parse(reportDate);
-            HouseholdMovementAddress movementAddress = movementAddressRepository.findById(new HouseholdMovementAddress.Pk(householdSerialNumber, parsedReportDate)).get();
+
+            SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDateString = outputDateFormat.format(parsedReportDate);
+
+            Date finalDate = outputDateFormat.parse(formattedDateString);
+
+            HouseholdMovementAddress movementAddress = movementAddressRepository.findById(new HouseholdMovementAddress.Pk(householdSerialNumber, finalDate)).get();
 
             if (modifyRequest.getHouseMovementAddress() != null){
                 movementAddress.setHouseMovementAddress(modifyRequest.getHouseMovementAddress());
@@ -67,12 +75,17 @@ public class HouseholdMovementAddressRestController {
     }
 
     @DeleteMapping("/{reportDate}")
-    public ResponseEntity<Void> deleteMovement(@PathVariable("householdSerialNumber") int householdSerialNumber, @PathVariable("reportDate") String reportDate){
+    public ResponseEntity<Void> deleteMovement(@PathVariable("householdSerialNumber") Integer householdSerialNumber, @PathVariable("reportDate") String reportDate){
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
             Date parsedReportDate = dateFormat.parse(reportDate);
 
-            movementAddressRepository.deleteById(new HouseholdMovementAddress.Pk(householdSerialNumber, parsedReportDate));
+            SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDateString = outputDateFormat.format(parsedReportDate);
+
+            Date finalDate = outputDateFormat.parse(formattedDateString);
+
+            movementAddressRepository.deleteById(new HouseholdMovementAddress.Pk(householdSerialNumber, finalDate));
         }catch (ParseException e) {
             return ResponseEntity.badRequest().build();
         }

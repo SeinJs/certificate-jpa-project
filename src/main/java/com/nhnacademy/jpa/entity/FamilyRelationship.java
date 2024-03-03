@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "family_relationship")
 public class FamilyRelationship {
@@ -26,6 +27,7 @@ public class FamilyRelationship {
     @Embeddable
     @EqualsAndHashCode
     @NoArgsConstructor
+    @Getter
     @AllArgsConstructor
     public static class Pk implements Serializable{
         @Column(name = "base_resident_serial_number")

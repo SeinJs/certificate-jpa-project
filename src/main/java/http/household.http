@@ -1,5 +1,5 @@
 
-POST http://localhost:8081/household
+POST http://localhost:8080/household
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8081/residents
+POST http://localhost:8080/residents
 Content-Type: application/json
 
 {
@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8081/residents/8/relationship
+POST http://localhost:8080/residents/8/relationship
 Content-Type: application/json
 
 {
@@ -33,7 +33,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8081/residents/8/relationship
+POST http://localhost:8080/residents/8/relationship
 Content-Type: application/json
 
 {
@@ -42,8 +42,8 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:8081/household/2
+PUT http://localhost:8080/household/2
 
 ###
-DELETE http://localhost:8081/household/2
+DELETE http://localhost:8080/household/2
 ###

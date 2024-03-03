@@ -7,13 +7,13 @@ import java.util.Date;
 
 @Data
 public class ResidentModifyRequest {
-    @NotEmpty
     private String name;
-    @NotEmpty
     private String residentRegistrationNumber;
-    @NotEmpty
     private String genderCode;
     private Date deathDate;
     private String deathPlaceCode;
     private String deathPlaceAddress;
+    private String email;
+    private String id;
+    private String password;
 }

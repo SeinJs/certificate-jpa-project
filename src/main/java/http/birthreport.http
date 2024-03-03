@@ -1,4 +1,4 @@
-POST http://localhost:8081/residents
+POST http://localhost:8080/residents
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8081/residents/8/birth
+POST http://localhost:8080/residents/8/birth
 Content-Type: application/json
 
 {
@@ -24,12 +24,12 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:8081/residents/8/birth/10
+PUT http://localhost:8080/residents/8/birth/10
 Content-Type: application/json
 
 {
   "phoneNumber": "010-XXXX-YYYY"
 }
 ###
-DELETE http://localhost:8081/residents/8/birth/10
+DELETE http://localhost:8080/residents/8/birth/10
 ###

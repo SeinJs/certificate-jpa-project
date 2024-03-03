@@ -12,12 +12,12 @@
                 <tr>
                     <th colspan="6">
                         가족관계증명서<br>
-                        (발급일 : , 증명서확인번호 : )
+                        (발급일 : <span th:text="${certificateDetails.getCertificateIssueDate()}"></span>, 증명서확인번호 : <span th:text="${certificateDetails.getCertificateConfirmationNumber()}"></span>)
                     </th>
                 </tr>
                 <tr>
                     <th colspan="2">등록기준지(본적)</th>
-                    <td colspan="3"></td>
+                    <td colspan="3" th:text="${household.getCurrentHouseMovementAddress()}"></td>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +28,13 @@
                     <th>주민등록번호</th>
                     <th>성별</th>
                 </tr>
-                <tr></tr>
+                <tr th:each="resident : ${relationships}">
+                    <td th:text="${resident.getFamilyRelationshipCode()}"></td>
+                    <td th:text="${resident.getBaseResident().getName()}"></td>
+                    <td th:text="${#dates.format(resident.getBaseResident().getBirthDate(), 'yyyy년 MM월 dd일')}"></td>
+                    <td th:text="${resident.getBaseResident().getResidentRegistrationNumber()}"></td>
+                    <td th:text="${resident.getBaseResident().getGenderCode()}"></td>
+                </tr>
             </tbody>
         </table>
     </div>

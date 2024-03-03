@@ -2,6 +2,7 @@ package com.nhnacademy.jpa.controller.restcontroller;
 
 import com.nhnacademy.jpa.entity.BirthDeathReportResident;
 import com.nhnacademy.jpa.entity.FamilyRelationship;
+import com.nhnacademy.jpa.entity.HouseholdCompositionResident;
 import com.nhnacademy.jpa.entity.Resident;
 import com.nhnacademy.jpa.repository.BirthDeathReportResidentRepository;
 import com.nhnacademy.jpa.repository.FamilyRelationshipRepository;
@@ -13,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/residents/{serialNumber}/birth")
@@ -32,23 +33,14 @@ public class BirthReportRestController {
 
     @PostMapping
     public ResponseEntity<Void> registerBirthReport(@PathVariable("serialNumber") Integer serialNumber, @RequestBody BirthDeathReportRegisterRequest reportRequest){
-        // 태어난 resident 생성
-        Resident bornResident = new Resident();
-        bornResident.setResidentSerialNumber(residentRepository.getLastRegistrationNumber()+1);
-        bornResident.setName(reportRequest.getName());
-        bornResident.setResidentRegistrationNumber(reportRequest.getRegistrationNumber());
-        bornResident.setGenderCode(reportRequest.getGenderCode());
-        bornResident.setBirthDate(reportRequest.getParsedBirthDate());
-        bornResident.setBirthPlaceCode(reportRequest.getBirthPlaceCode());
-        bornResident.setRegistrationBaseAddress(reportRequest.getRegistrationBaseAddress());
-        residentRepository.save(bornResident);
+        Resident bornResident = residentRepository.findByResidentSerialNumber(reportRequest.getResidentSerialNumber());
 
         // 신고서 생성
         BirthDeathReportResident birthReportResident = new BirthDeathReportResident();
         BirthDeathReportResident.Pk pk = new BirthDeathReportResident.Pk(
                 reportRequest.getBirthDeathTypeCode(),
                 serialNumber,
-                bornResident.getResidentSerialNumber()
+                reportRequest.getResidentSerialNumber()
         );
         birthReportResident.setPk(pk);
         birthReportResident.setBirthDeathReportDate(reportRequest.getParsedReportDate());
@@ -61,14 +53,47 @@ public class BirthReportRestController {
         birthDeathReportResidentRepository.save(birthReportResident);
 
         //가족관계 생성
-        // 부, 모
-        List<FamilyRelationship> reportersRelationshipList = residentRepository.getResidentsRelationships(serialNumber);
-        FamilyRelationship familyRelationship = new FamilyRelationship();
-        FamilyRelationship.Pk fPk = new FamilyRelationship.Pk(
+        FamilyRelationship spouse = familyRelationshipRepository.findByBaseResident_ResidentSerialNumberAndFamilyRelationshipCode(serialNumber, "배우자");
 
-        );
+        // 자녀 -> 부, 모
+        familyRelationshipRepository.save(new FamilyRelationship(
+                new FamilyRelationship.Pk(bornResident.getResidentSerialNumber(), serialNumber),
+                reportRequest.getBirthReportQualificationCode(),
+                bornResident
+        ));
+
+        familyRelationshipRepository.save(new FamilyRelationship(
+                new FamilyRelationship.Pk(bornResident.getResidentSerialNumber(), spouse.getPk().getFamilyResidentSerialNumber()),
+                Objects.equals(reportRequest.getBirthReportQualificationCode(), "부") ? "모" : "부",
+                bornResident
+        ));
+
+        // 자녀 <- 부, 모
+        familyRelationshipRepository.save(new FamilyRelationship(
+                new FamilyRelationship.Pk(serialNumber, bornResident.getResidentSerialNumber()),
+                "자녀",
+                bornResident
+        ));
+
+        familyRelationshipRepository.save(new FamilyRelationship(
+                new FamilyRelationship.Pk(spouse.getPk().getFamilyResidentSerialNumber(), bornResident.getResidentSerialNumber()),
+                "자녀",
+                bornResident
+        ));
 
         //세대구성원 생성
+        HouseholdCompositionResident compositionResident = householdCompositionResidentRepository.findByResident_ResidentSerialNumber(serialNumber);
+        householdCompositionResidentRepository.save(new HouseholdCompositionResident(
+                new HouseholdCompositionResident.Pk(
+                        compositionResident.getHousehold().getHouseholdSerialNumber(),
+                        reportRequest.getResidentSerialNumber()
+                ),
+                reportRequest.getParsedReportDate(),
+                "자녀",
+                "출생등록",
+                compositionResident.getHousehold(),
+                bornResident
+        ));
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

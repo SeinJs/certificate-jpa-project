@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -30,6 +29,7 @@ public class HouseholdMovementAddress {
 
     @Embeddable
     @EqualsAndHashCode
+    @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Pk implements Serializable{

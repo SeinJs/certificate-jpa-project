@@ -12,14 +12,17 @@
                 <tr>
                     <th colspan="6">
                         주민등록등본<br>
-                        (발급일 : , 증명서확인번호 : )
+                        (발급일 : <span th:text="${certificateDetails.getCertificateIssueDate()}"></span>, 증명서확인번호 : <span th:text="${certificateDetails.getCertificateConfirmationNumber()}"></span>)
                     </th>
                 </tr>
                 <tr>
                     <td colspan="2">세대주 성명</td>
-                    <td></td>
+                    <td th:text="${compositionResidents.get(0).getResident().getName()}"></td>
                     <td>세대구성 사유 및 일자</td>
-                    <td colspan="2"></td>
+                    <td colspan="2">
+                        <span th:text="${compositionResidents.get(0).getHouseholdCompositionChangeReasonCode()}"></span>
+                        <span th:text="${compositionResidents.get(0).getReportDate()}"></span>
+                    </td>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +30,11 @@
                     <th colspan="4">주소</th>
                     <th colspan="2">신고일</th>
                 </tr>
-                <tr></tr>
+                <tr th:each="address : ${addresses}">
+                    <td th:text="${address.getLastAddressYn() == 'Y' ? '현주소' : '前주소'}"></td>
+                    <td colspan="3" th:text="${address.getHouseMovementAddress()}"></td>
+                    <td colspan="2" th:text="${address.getPk().getHouseMovementReportDate()}"></td>
+                </tr>
                 <tr>
                     <th>세대주 관계</th>
                     <th>성명</th>
@@ -35,7 +42,13 @@
                     <th>신고일</th>
                     <th>변동사유</th>
                 </tr>
-                <tr></tr>
+                <tr th:each="resident : ${compositionResidents}">
+                    <td th:text="${resident.getHouseholdRelationshipCode()}"></td>
+                    <td th:text="${resident.getResident().getName()}"></td>
+                    <td colspan="2" th:text="${resident.getResident().getResidentRegistrationNumber()}"></td>
+                    <td th:text="${resident.getReportDate()}"></td>
+                    <td th:text="${resident.getHouseholdCompositionChangeReasonCode()}"></td>
+                </tr>
             </tbody>
         </table>
     </div>
